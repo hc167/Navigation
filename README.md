@@ -4,16 +4,10 @@ To set up your python environment to run the code in this repository, follow the
 
 1. Create (and activate) a new environment with Python 3.6.
 
-        - __Linux__ or __Mac__: 
-        ```bash
-        conda create --name drlnd python=3.6
-        source activate drlnd
-        ```
-        - __Windows__: 
-        ```bash
-        conda create --name drlnd python=3.6 
-        activate drlnd
-        ```
+```bash
+conda create --name drlnd python=3.6 
+source activate drlnd (Or just activate drlnd for windows 10)
+```
         
 2. Set up dependency for gym and pytorch
 ```bash
@@ -35,10 +29,6 @@ pip install .
 [//]: # (Image References)
 
 [image1]: https://user-images.githubusercontent.com/10624937/42135602-b0335606-7d12-11e8-8689-dd1cf9fa11a9.gif "Trained Agents"
-[image2]: https://user-images.githubusercontent.com/10624937/42386929-76f671f0-8106-11e8-9376-f17da2ae852e.png "Kernel"
-
-![Trained Agents][image1]
-![Kernel][image2]
 
 # Project 1: Navigation
 
