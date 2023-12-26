@@ -1,5 +1,4 @@
 import numpy as np
-import random
 from collections import namedtuple, deque
 
 from model import QNetwork
@@ -7,6 +6,7 @@ from model import QNetwork
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
+import secrets
 
 BUFFER_SIZE = int(1e5)  # replay buffer size
 BATCH_SIZE = 64         # minibatch size
@@ -31,7 +31,7 @@ class Agent():
         """
         self.state_size = state_size
         self.action_size = action_size
-        self.seed = random.seed(seed)
+        self.seed = secrets.SystemRandom().seed(seed)
 
         # Q-Network
         self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
@@ -75,10 +75,10 @@ class Agent():
         self.qnetwork_local.train()
 
         # Epsilon-greedy action selection
-        if random.random() > eps:
+        if secrets.SystemRandom().random() > eps:
             return np.argmax(action_values.cpu().data.numpy())
         else:
-            return random.choice(np.arange(self.action_size))
+            return secrets.SystemRandom().choice(np.arange(self.action_size))
 
     def learn(self, experiences, gamma):
         """Update value parameters using given batch of experience tuples.
@@ -139,7 +139,7 @@ class ReplayBuffer:
         self.memory = deque(maxlen=buffer_size)  
         self.batch_size = batch_size
         self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
-        self.seed = random.seed(seed)
+        self.seed = secrets.SystemRandom().seed(seed)
     
     def add(self, state, action, reward, next_state, done):
         """Add a new experience to memory."""
@@ -148,7 +148,7 @@ class ReplayBuffer:
     
     def sample(self):
         """Randomly sample a batch of experiences from memory."""
-        experiences = random.sample(self.memory, k=self.batch_size)
+        experiences = secrets.SystemRandom().sample(self.memory, k=self.batch_size)
 
         states = torch.from_numpy(np.vstack([e.state for e in experiences if e is not None])).float().to(device)
         actions = torch.from_numpy(np.vstack([e.action for e in experiences if e is not None])).long().to(device)
